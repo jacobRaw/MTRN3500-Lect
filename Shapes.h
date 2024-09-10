@@ -4,7 +4,7 @@
 
 class Shapes
 {
-private:
+protected:
 	Point P;
 	double Orientation;
 	int R;
@@ -18,5 +18,5 @@ public:
 	Shapes(Point p, double orientation, int r, int g, int b);
 	void Move(int deltaX, int deltaY, double deltaOrientation);
 	virtual void Draw(HDC h) = 0; //pure virtual function => abstract
-	~Shapes() {};
-};//gwkkii
+	virtual ~Shapes() {};
+};
