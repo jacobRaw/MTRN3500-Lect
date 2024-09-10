@@ -19,4 +19,4 @@ public:
 	void Move(int deltaX, int deltaY, double deltaOrientation);
 	virtual void Draw(HDC h) = 0; //pure virtual function => abstract
 	~Shapes() {};
-};
+};//gwkkii
