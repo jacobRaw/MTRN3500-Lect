@@ -1,8 +1,15 @@
 // RobotArm.cpp : Defines the entry point for the application.
 //
 
+#define _USE_MATH_DEFINES
 #include "framework.h"
 #include "RobotArm.h"
+#include "Shapes.h"
+#include "Circle.h"
+#include "Line.h"
+#include <math.h>
+#include "Link.h"
+#include "Robot.h"
 
 #define MAX_LOADSTRING 100
 
@@ -16,12 +23,20 @@ ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
+Robot* UR5;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
+    UR5 = new Robot(Point(400, 600),
+        {
+            {200, -M_PI / 2.0, 20, 255, 0, 0},
+            {180, -M_PI / 4.0, 18, 255, 0, 0},
+            {160, 0.00,        16, 0, 255, 0},
+            {140, M_PI / 4.0, 14, 0, 0, 255}
+        });
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -144,13 +159,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_PAINT:
         {
+            RECT ClientRect;
+            GetClientRect(hWnd, (LPRECT)&ClientRect);
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
+            UR5->Draw(hdc);
             // TODO: Add any drawing code that uses hdc here...
             EndPaint(hWnd, &ps);
+            Sleep(40);
+            UR5->Move({ 0.00, 0.02, -0.01, 0.03});
+            InvalidateRect(hWnd, (const RECT*)&ClientRect, true);
         }
         break;
     case WM_DESTROY:
+        delete UR5;
         PostQuitMessage(0);
         break;
     default:

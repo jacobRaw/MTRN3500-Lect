@@ -3,7 +3,7 @@
 
 class Line : public Shapes
 {
-private:
+protected:
 	double Length;
 
 public:

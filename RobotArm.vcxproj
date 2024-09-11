@@ -139,7 +139,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Circle.cpp" />
+    <ClCompile Include="Line.cpp" />
+    <ClCompile Include="Link.cpp" />
     <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Robot.cpp" />
     <ClCompile Include="RobotArm.cpp" />
     <ClCompile Include="Shapes.cpp" />
   </ItemGroup>
