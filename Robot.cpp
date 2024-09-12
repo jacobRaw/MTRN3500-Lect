@@ -2,7 +2,7 @@
 
 Robot::Robot(Point base, std::vector<LinkProperties> data):Base(base)
 {
-	int n = data.size();
+	int n = (int)(data.size());
 	Links.resize(n);
 	int i = 0;
 	for (std::vector<LinkProperties>::iterator it = data.begin(); it != data.end(); it++)
@@ -39,4 +39,13 @@ Robot::~Robot()
 	{
 		delete(*it);
 	}
+}
+
+std::ostream& operator<<(std::ostream& os, const Robot& r)
+{
+	Point P;
+	int n = (int)(r.Links.size());
+	P = r.Links[n - 1]->GetEnd(); //gets the end point of the last link
+	os << P.GetX() << " " << P.GetY() << " ";
+	return os;
 }

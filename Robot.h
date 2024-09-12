@@ -2,6 +2,8 @@
 #include "Point.h"
 #include "Link.h"
 #include <vector>
+#include <iostream>
+#include <fstream>
 
 struct LinkProperties
 {
@@ -25,4 +27,5 @@ public:
 	void Draw(HDC h);
 	void Move(std::vector<double> angles);
 	~Robot();
+	friend std::ostream& operator<<(std::ostream& os, const Robot& r);
 };

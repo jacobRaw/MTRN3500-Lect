@@ -24,12 +24,14 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 Robot* UR5;
+std::ofstream os("EndPointCoordinates.m");
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
                      _In_ int       nCmdShow)
 {
+    os << "A = [";
     UR5 = new Robot(Point(400, 600),
         {
             {200, -M_PI / 2.0, 20, 255, 0, 0},
@@ -167,11 +169,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             // TODO: Add any drawing code that uses hdc here...
             EndPaint(hWnd, &ps);
             Sleep(40);
+            os << *UR5 << std::endl;
             UR5->Move({ 0.00, 0.02, -0.01, 0.03});
             InvalidateRect(hWnd, (const RECT*)&ClientRect, true);
         }
         break;
     case WM_DESTROY:
+        os << "];" << std::endl;
+        os << "plot(A(:,1),A(:,2))" << std::endl;
+        os << "hold on;" << std::endl;
         delete UR5;
         PostQuitMessage(0);
         break;
